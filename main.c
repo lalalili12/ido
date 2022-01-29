@@ -8,7 +8,7 @@
 
 
 
-
+//TODO: TEST
 
 //a func that check if a character is a digit
 int isDigit(char c) {
