@@ -3,6 +3,13 @@
 #define SIZE 3
 
 
+#define ANSI_COLOR_BLUE  "\x1b[34m"
+#define ANSI_COLOR_RESET   "\x1b[0m"
+
+
+
+
+
 //a func that check if a character is a digit
 int isDigit(char c) {
     if (c >= '1' && c <= '9')
@@ -90,40 +97,29 @@ int isStringOkay(int size, char str[]) {
 
 // this func returns how many spaces are needed to fill the board for specific letter
 int spacesPerLetter(char letter) {
-    int counter = 0;
     //needs to ask if there is a better way than this like enum
     switch (letter) {
         case 'a':
-            counter += 1;
-            break;
+          return 1;
         case 'b':
-            counter += 2;
-            break;
+          return 2;
         case 'c':
-            counter += 3;
-            break;
+          return 3;
         case 'd':
-            counter += 4;
-            break;
+          return 4;
         case 'e':
-            counter += 5;
-            break;
+          return 5;
         case 'f':
-            counter += 6;
-            break;
+          return 6;
         case 'g':
-            counter += 7;
-            break;
+          return 7;
         case 'h':
-            counter += 8;
-            break;
+          return 8;
         case 'i':
-            counter += 9;
-            break;
+          return 9;
         default:
-            break;
+          return 0;
     }
-    return counter;
 }
 
 // takes the string and simplify it by taking out / and replace letters with the right amount of spaces
@@ -132,7 +128,6 @@ void simplifiedString(char str[], char *modified_str) {
         if (isLetter(str[i])) {
             for (int j = 0; j < spacesPerLetter(str[i]); ++j)
                 *(modified_str + i + j) = ' ';
-            //need to ask if it is true that -1 is needed
             i += spacesPerLetter(str[i]);
             continue;
         }
@@ -141,24 +136,23 @@ void simplifiedString(char str[], char *modified_str) {
     }
 }
 
-//need to ask if true
-//char *new_str = modified_str;
-//simplifiedString(str, &new_str);
+
 //creating the board
 void createBoard(char board[][SIZE * SIZE], char str[]) {
-    char modified_str[SIZE * SIZE + SIZE + 1];
-    for (int i = 0; i > howManyCharactersInString(str); i++) {
+    char modified_str[SIZE * SIZE * SIZE * SIZE + SIZE + 1];
+    int blanksAdded = 0;
+    for (int i = 0; i < howManyCharactersInString(str); i++) {
         if (isLetter(str[i])) {
             for (int j = 0; j < spacesPerLetter(str[i]); ++j)
-                modified_str[i + j] = ' ';
-            //need to ask if it is true that -1 is needed
-            i += spacesPerLetter(str[i]);
-            continue;
+                modified_str[i + j + blanksAdded] = ' ';
+            blanksAdded += (spacesPerLetter(str[i]) - 1);
         }
-        if (str[i] != '/')
-            modified_str[i] = str[i];
+        else if (str[i] != '/')
+            modified_str[i + blanksAdded] = str[i];
+        else {
+          blanksAdded--;
+        }
     }
-
 
     for (int row = 0; row < SIZE * SIZE; row++) {
         for (int column = 0; column < SIZE * SIZE; column++) {
@@ -166,26 +160,25 @@ void createBoard(char board[][SIZE * SIZE], char str[]) {
         }
     }
 }
-
-
+// prints the board
 void printBoard(char board[][SIZE * SIZE]) {
     for (int row = 0; row < SIZE * SIZE; row++) {
-        for (int column = 0; column < SIZE * SIZE; column++)
-            printf("%3d", board[row][column]);
+        for (int column = 0; column < SIZE * SIZE; column++) {
+          printf(ANSI_COLOR_BLUE "%3c" ANSI_COLOR_RESET, board[row][column]);
+        }
         printf("\n");
     }
 }
 
 int main() {
-    char str[] = "12a345679/12a345679/12a345679/12a345679/12a345678/12a345978/12a345879/12a385679/18a345679";
+    char str[] = "12a345679/12a345679/12a345679/12a345679/12a345678/12a345978/12a345879/12ab5679/18a345679";
     char board[SIZE * SIZE][SIZE * SIZE];
-    //this part is checking if the string legal and according to
-    // that deciding or to exit the func of keep going with it
     if (!isStringOkay(howManyCharactersInString(str), str)) {
         printf("ERRoR");
         return -1;
     }
     createBoard(board, str);
     printBoard(board);
+    scanf("%c");
     return 0;
 }
