@@ -82,6 +82,7 @@ int placeCounter(int size, char str[]) {
                     break;
             }
     }
+
     if (counter != (SIZE * SIZE) * (SIZE * SIZE) + (SIZE * SIZE) - 1)
         return 0;
     return 1;
