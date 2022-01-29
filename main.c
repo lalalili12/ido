@@ -172,12 +172,11 @@ void printBoard(char board[][SIZE * SIZE]) {
 }
 
 
-
-
-
-
-
-
+void makeMove(char board[][SIZE*SIZE], char move[]);
+void replaceAll(char board[][SIZE*SIZE], char char1, char char2);
+void change(char board[][SIZE*SIZE], int locationRow, int locationCol, char char1);
+void add(char board[][SIZE*SIZE], int locationRow, int locationCol, char char1);
+void delete(char board[][SIZE*SIZE], int locationRow, int locationCol);
 
 int main() {
     char str[] = "12a345679/12a345679/12a345679/12a345679/12a345678/12a345978/12a345879/12ab5679/18a345679";
