@@ -157,7 +157,7 @@ void createBoard(char board[][SIZE * SIZE], char str[]) {
         }
         if (str[i] != '/')
             modified_str[i] = str[i];
-    }git
+    }
 
 
 
