@@ -1,11 +1,141 @@
 #include <stdio.h>
+#include <string.h>
+#include <stdlib.h>
+#include <stdbool.h>
+#include "main.h"
 
-#define SIZE 3
 
 
 #define ANSI_COLOR_BLUE  "\x1b[34m"
 #define ANSI_COLOR_RESET   "\x1b[0m"
 
+
+void error(char* err){
+    printf(" Error %s \n",err);
+}
+
+
+void makeMove(char board[][SIZE*SIZE], char move[]){
+    char *token;
+
+    char *func_name;
+    func_name = strtok(move , ',');
+    char* arg[4] = {NULL,NULL,NULL,NULL};
+    int counter = 0;
+    while( token != NULL && counter < 4 ) {
+        token = strtok(NULL, ',');
+        arg[counter] = token;
+        counter++;
+    }
+    if (arg[4] != NULL){
+        error("too many args");
+     return;
+    }
+}
+
+bool isnumber(char *arg1);
+
+void pickMove(char board[][SIZE * SIZE], char* func , char* arg1, char* arg2, char* arg3){
+    if (arg2 == NULL || arg1 == NULL){
+        error("give me more arg");
+        return;
+    }
+    //calling to replaceall
+    if(!strcmp(func,"replaceAll")){
+        if(arg3 == NULL)
+            replaceAll(board,*arg1,*arg2);
+        else
+            error("too many args");
+        return;
+    }
+    //calling to change
+    if(!strcmp(func,"change")){
+        int locationRow,locationCol;
+        char c;
+        if (!isnumber(arg1) || !isnumber(arg2)) {
+            error("not a number ");
+            return;
+        }
+        locationRow = atoi(arg1);
+        locationCol = atoi(arg2);
+        if (arg3 == NULL){
+            error("missing arg");
+            return;
+        }
+        c = *arg3;
+        change(board,locationRow,locationCol,c);
+        return;
+    }
+    //calling to add
+    if(!strcmp(func,"add")){
+        int locationRow,locationCol;
+        char c;
+        if (!isnumber(arg1) || !isnumber(arg2)) {
+            error("not a number ");
+            return;
+        }
+        locationRow = atoi(arg1);
+        locationCol = atoi(arg2);
+        if (arg3 == NULL){
+            error("missing arg");
+            return;
+        }
+        c = *arg3;
+        add(board,locationRow,locationCol,c);
+        return;
+    }
+    //calling to delete
+    if(!strcmp(func,"delete")){
+        int locationRow,locationCol;
+        if (!isnumber(arg1) || !isnumber(arg2)) {
+            error("not a number ");
+            return;
+        }
+        locationRow = atoi(arg1);
+        locationCol = atoi(arg2);
+        if (arg3 != NULL){
+            error("too many args");
+            return;
+        }
+        delete(board,locationRow,locationCol);
+        return;
+    }
+
+}
+
+bool isnumber(char *arg1) {
+    for (int i = 0; arg1[i] != '\0'; ++i) {
+        if(!isDigit(arg1[i]))
+            return 0;
+    }
+    return 1;
+}
+
+void replaceAll(char board[][SIZE*SIZE], char char1, char char2);
+void change(char board[][SIZE*SIZE], int locationRow, int locationCol, char char1);
+void add(char board[][SIZE*SIZE], int locationRow, int locationCol, char char1);
+void delete(char board[][SIZE*SIZE], int locationRow, int locationCol);
+
+/*
+    int main () {
+    char str[80] = "This is - www.tutorialspoint.com - website";
+
+    char *token;
+
+
+    token = strtok(str, ',');
+
+
+    while( token != NULL ) {
+
+
+        token = strtok(NULL, ',');
+    }
+
+    return(0);
+}
+
+ */
 
 
 //TODO: TEST
@@ -172,13 +302,12 @@ void printBoard(char board[][SIZE * SIZE]) {
 }
 
 
-void makeMove(char board[][SIZE*SIZE], char move[]);
-void replaceAll(char board[][SIZE*SIZE], char char1, char char2);
-void change(char board[][SIZE*SIZE], int locationRow, int locationCol, char char1);
-void add(char board[][SIZE*SIZE], int locationRow, int locationCol, char char1);
-void delete(char board[][SIZE*SIZE], int locationRow, int locationCol);
+
 
 int main() {
+
+    error("no");
+
     char str[] = "12a345679/12a345679/12a345679/12a345679/12a345678/12a345978/12a345879/12ab5679/18a345679";
     char board[SIZE * SIZE][SIZE * SIZE];
     if (!isStringOkay(howManyCharactersInString(str), str)) {

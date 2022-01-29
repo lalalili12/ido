@@ -79,6 +79,9 @@
 		<Unit filename="/mnt/c/Users/User/CLionProjects/untitled2/main.c">
 			<Option target="untitled2"/>
 		</Unit>
+		<Unit filename="/mnt/c/Users/User/CLionProjects/untitled2/main.h">
+			<Option target="untitled2"/>
+		</Unit>
 		<Unit filename="/mnt/c/Users/User/CLionProjects/untitled2/CMakeLists.txt">
 			<Option virtualFolder="CMake Files\"/>
 		</Unit>
