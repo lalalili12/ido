@@ -156,7 +156,8 @@ void createBoard(char board[][SIZE * SIZE], char str[]) {
         }
         if (str[i] != '/')
             modified_str[i] = str[i];
-    }
+    }git
+
 
 
     for (int row = 0; row < SIZE * SIZE; row++) {
