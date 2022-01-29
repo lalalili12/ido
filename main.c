@@ -171,6 +171,14 @@ void printBoard(char board[][SIZE * SIZE]) {
     }
 }
 
+
+
+
+
+
+
+
+
 int main() {
     char str[] = "12a345679/12a345679/12a345679/12a345679/12a345678/12a345978/12a345879/12ab5679/18a345679";
     char board[SIZE * SIZE][SIZE * SIZE];
