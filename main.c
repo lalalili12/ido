@@ -2,9 +2,10 @@
 
 #define SIZE 3
 
+
 //a func that check if a character is a digit
 int isDigit(char c) {
-    if (c >= '0' && c <= '9')
+    if (c >= '1' && c <= '9')
         return 1;
     return 0;
 }
